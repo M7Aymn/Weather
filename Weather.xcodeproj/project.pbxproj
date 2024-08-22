@@ -15,6 +15,7 @@
 		C664D1E12C777472008919DB /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = C664D1E02C777472008919DB /* Weather.swift */; };
 		C664D1E52C7780B5008919DB /* DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C664D1E42C7780B5008919DB /* DayView.swift */; };
 		C664D1E72C7780FA008919DB /* HourView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C664D1E62C7780FA008919DB /* HourView.swift */; };
+		C681282F2C77925A000302D1 /* DummyObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C681282E2C77925A000302D1 /* DummyObject.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		C664D1E02C777472008919DB /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		C664D1E42C7780B5008919DB /* DayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayView.swift; sourceTree = "<group>"; };
 		C664D1E62C7780FA008919DB /* HourView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourView.swift; sourceTree = "<group>"; };
+		C681282E2C77925A000302D1 /* DummyObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyObject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				C664D1E02C777472008919DB /* Weather.swift */,
+				C681282E2C77925A000302D1 /* DummyObject.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -176,6 +179,7 @@
 				C664D1E12C777472008919DB /* Weather.swift in Sources */,
 				C664D1E52C7780B5008919DB /* DayView.swift in Sources */,
 				C664D1E72C7780FA008919DB /* HourView.swift in Sources */,
+				C681282F2C77925A000302D1 /* DummyObject.swift in Sources */,
 				C664D1D32C7772B1008919DB /* ContentView.swift in Sources */,
 				C664D1DF2C7772E3008919DB /* NetworkService.swift in Sources */,
 				C664D1D12C7772B1008919DB /* WeatherApp.swift in Sources */,

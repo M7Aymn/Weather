@@ -90,8 +90,9 @@ enum Icon: String, Codable {
 }
 
 enum Text0: String, Codable {
-    case clear = "Clear "
+    case clear = "Clear"
     case sunny = "Sunny"
+    case textClear = "Clear "
 }
 
 enum WindDir: String, Codable {

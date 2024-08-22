@@ -8,23 +8,27 @@
 import SwiftUI
 
 struct DayView: View {
+    let hours: [Current]
+    let isDay: Int
+    
     var body: some View {
         ZStack {
-            Color.green
-                .ignoresSafeArea()
+//            Color.green
+//                .ignoresSafeArea()
+            (isDay == 1 ? Image(.day) : Image(.night))
+//                .ignoresSafeArea()
+                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
             
-            VStack {
-                Group {
-                    HourView()
-                    HourView()
-                    HourView()
-                    HourView()
-                    HourView()
+            ScrollView {
+                VStack {
+                    ForEach(hours, id: \.time) { hour in
+                        HourView(hour: hour)
+                    }
+                    .font(.largeTitle)
+                    .padding()
                 }
-                .font(.largeTitle)
-                .padding()
-                
-                Spacer()
+                .padding(.vertical, 50)
+                .foregroundStyle(isDay == 1 ? .black : .white)
             }
             
         }
@@ -33,5 +37,6 @@ struct DayView: View {
 }
 
 #Preview {
-    DayView()
+//    DayView()
+    ContentView()
 }

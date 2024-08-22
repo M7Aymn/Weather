@@ -8,19 +8,21 @@
 import SwiftUI
 
 struct HourView: View {
+    let hour: Current
     var body: some View {
         HStack {
-            Text("Now")
+            Text(hour.time?.suffix(5) ?? "empty")
                 .font(.title)
                 .frame(width: 120, alignment: .leading)
             Image(systemName: "cloud.fill")
-            Text("15°")
+            Text(String(format: "%.1f°", hour.tempC))
                 .font(.title)
-                .frame(width: 80, alignment: .trailing)
+                .frame(width: 120, alignment: .trailing)
         }
     }
 }
 
 #Preview {
-    HourView()
+//    HourView()
+    ContentView()
 }

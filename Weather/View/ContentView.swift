@@ -8,128 +8,123 @@
 import SwiftUI
 
 struct ContentView: View {
-    var isDay: Bool = true
+    @State private var weather: Weather?
+    @State private var isDay: Int = 1
+    
     var body: some View {
         NavigationStack{
             ZStack {
-                (isDay ? Image(.day) : Image(.night))
+                (isDay == 1 ? Image(.day) : Image(.night))
                     .ignoresSafeArea()
                     .frame(width: UIScreen.main.bounds.width)
                 
-                VStack {
+                if let weather = weather {
                     VStack {
-                        Text("Cairo") .bold()
-                        Text("21°") .bold()
-                        Text("Partly Cloudy")
-                        Text("H:16° L:6°")
-                        Image(systemName: "cloud")
-                    }
-                    .font(.title)
-                    .padding()
-                    
-                    VStack(alignment: .leading) {
-                        Text("3-DAY FORECAST")
-                        Divider().background(.black)
-                        
-                        
-                        NavigationLink {
-                            DayView()
-                        } label: {
-                            HStack {
-                                Text("Today")
-                                    .frame(width: 66, alignment: .leading)
-                                Image(systemName: "cloud")
-                                Text("7.8° - 15.5°")
-                                    .frame(width: 100, alignment: .trailing)
-                            }
-                            .padding(.vertical, 2)
-                        }
-                        
-                        Divider().background(.black)
-                        
-                        NavigationLink {
-                            DayView()
-                        } label: {
-                            HStack {
-                                Text("Wed")
-                                    .frame(width: 66, alignment: .leading)
-                                Image(systemName: "cloud")
-                                Text("7.8° - 15.5°")
-                                    .frame(width: 100, alignment: .trailing)
-                            }
-                            .padding(.vertical, 2)
-                        }
-                        
-                        Divider().background(.black)
-                        
-                        NavigationLink {
-                            DayView()
-                        } label: {
-                            HStack {
-                                Text("Thu")
-                                    .frame(width: 66, alignment: .leading)
-                                Image(systemName: "cloud")
-                                Text("7.8° - 15.5°")
-                                    .frame(width: 100, alignment: .trailing)
-                            }
-                            .padding(.vertical, 2)
-                        }
-                    }
-                    .font(.title3)
-                    .frame(width: 220)
-                    .padding()
-                    
-                    HStack {
-                        Spacer()
                         VStack {
-                            Text("VISIBILITY")
-                                .padding()
-                            Text("10 Km")
-                                .font(.title)
-                                .padding(.bottom, 20)
-                            
-                            
-                            Text("FEELS LIKE")
-                                .padding()
-                            
-                            Text("16°")
-                                .font(.title)
-                                .padding(.bottom, 20)
+                            Text(weather.location.name) .bold()
+                            Text(String(format: "%.1f°", weather.current.tempC))
+                                .bold()
+                            Text("Partly Cloudy")
+                            Text(
+                                String(format: "H:%.1f° L:%.1f°", weather.forecast.forecastday[0].day.maxtempC, weather.forecast.forecastday[0].day.mintempC)
+                            )
+#warning("change image")
+                            Image(systemName: "cloud")
                         }
-                        Spacer()
-                        VStack {
-                            Text("HUMIDITY")
-                                .padding()
+                        .font(.title)
+                        .padding()
+                        
+                        VStack(alignment: .leading) {
+                            Text("3-DAY FORECAST")
                             
-                            Text("36%")
-                                .font(.title)
-                                .padding(.bottom, 20)
                             
-                            Text("PRESSURE")
-                                .padding()
                             
-                            Text("1,021")
-                                .font(.title)
-                                .padding(.bottom, 20)
-                            
+                            ForEach(weather.forecast.forecastday, id: \.date) { dayForecast in
+                                Divider().background(.black)
+                                
+                                NavigationLink {
+                                    DayView(hours: dayForecast.hour, isDay: isDay)
+                                } label: {
+                                    HStack {
+                                        Text(dayForecast.date)
+                                            .frame(width: 125, alignment: .leading)
+                                        Image(systemName: "cloud")
+                                        Text(String(format: "%.1f° - %.1f°", dayForecast.day.mintempC, dayForecast.day.maxtempC)
+                                        )
+                                        .frame(width: 125, alignment: .trailing)
+                                    }
+                                    .padding(.vertical, 2)
+                                }
+                            }
                         }
-                        Spacer()
+                        .font(.title3)
+                        .frame(width: 300)
+                        .padding()
+                        
+                        HStack(spacing: 30) {
+                            Spacer()
+                            VStack(spacing: 5) {
+                                Text("VISIBILITY")
+                                    .padding(.bottom, 5)
+                                Text("\(weather.current.visKM) Km")
+                                    .font(.title)
+                                    .padding(.bottom, 20)
+                                
+                                
+                                Text("FEELS LIKE")
+                                    .padding(.bottom, 5)
+                                
+                                Text(String(format: "%.1f°", weather.current.feelslikeC))
+                                    .font(.title)
+                                    .padding(.bottom, 20)
+                            }
+                            .padding(.bottom, 30)
+                            Spacer()
+                            
+                            VStack(spacing: 5) {
+                                Text("HUMIDITY")
+                                    .padding(.bottom, 5)
+                                
+                                Text("\(weather.current.humidity)%")
+                                    .font(.title)
+                                    .padding(.bottom, 20)
+                                
+                                Text("PRESSURE")
+                                    .padding(.bottom, 5)
+                                
+                                Text("\(weather.current.pressureMB)")
+                                    .font(.title)
+                                    .padding(.bottom, 20)
+                                
+                            }
+                            .padding(.bottom, 30)
+                            Spacer()
+                        }
+                        
+                        
+                        
+                        
                     }
-                    
-                    
-                    
-                    
-                    
+                    .padding()
+                    .foregroundStyle(isDay == 1 ? .black : .white)
+                } else {
+                    VStack{
+                        ProgressView()
+                            .scaleEffect(2)
+                            .frame(height: 75)
+                        Text("loading ...")
+                            .font(.largeTitle)
+                    }
+                        .task {
+                                    NetworkService.load { Weather in
+                                        self.weather = Weather
+                                        self.isDay = Weather.current.isDay
+                                    }
+                                }
                 }
-                .padding()
-                .foregroundStyle(isDay ? .black : .white)
             }
         }
-//        .task {
-//            NetworkService.load { Weather in
-//                print(Weather.current)
-//            }
-//        }
+//
     }
 }
 

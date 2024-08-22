@@ -24,7 +24,9 @@ struct NetworkService {
             }
             do {
                 let users = try JSONDecoder().decode(Weather.self, from: data)
+                print(users)
                 compilation(users)
+                
             } catch {
                 print(error.localizedDescription)
             }
