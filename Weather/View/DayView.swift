@@ -13,10 +13,10 @@ struct DayView: View {
     
     var body: some View {
         ZStack {
-//            Color.green
-//                .ignoresSafeArea()
+            //            Color.green
+            //                .ignoresSafeArea()
             (isDay == 1 ? Image(.day) : Image(.night))
-//                .ignoresSafeArea()
+            //                .ignoresSafeArea()
                 .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
             
             ScrollView {
@@ -32,11 +32,11 @@ struct DayView: View {
             }
             
         }
-            
+        
     }
 }
 
 #Preview {
-//    DayView()
+    //    DayView()
     ContentView()
 }

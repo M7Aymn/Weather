@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var weather: Weather?
-    @State private var isDay: Int = 1
+    @State private var isDay: Int = 0
     
     var body: some View {
         NavigationStack{
@@ -28,8 +28,9 @@ struct ContentView: View {
                             Text(
                                 String(format: "H:%.1f° L:%.1f°", weather.forecast.forecastday[0].day.maxtempC, weather.forecast.forecastday[0].day.mintempC)
                             )
-#warning("change image")
-                            Image(systemName: "cloud")
+                            ConditionImage(urlString: "https:" + weather.current.condition.icon.rawValue)
+                                .frame(width: 110, height: 110)
+                                .padding(-45)
                         }
                         .font(.title)
                         .padding()
@@ -46,9 +47,11 @@ struct ContentView: View {
                                     DayView(hours: dayForecast.hour, isDay: isDay)
                                 } label: {
                                     HStack {
-                                        Text(dayForecast.date)
+                                        Text(DateFormat.dayOfWeek(from: dayForecast.date))
                                             .frame(width: 125, alignment: .leading)
-                                        Image(systemName: "cloud")
+                                        ConditionImage(urlString: "https:" + dayForecast.day.condition.icon.rawValue)
+                                            .frame(width: 50, height: 50)
+                                            .padding(.vertical, -10)
                                         Text(String(format: "%.1f° - %.1f°", dayForecast.day.mintempC, dayForecast.day.maxtempC)
                                         )
                                         .frame(width: 125, alignment: .trailing)
@@ -115,16 +118,15 @@ struct ContentView: View {
                         Text("loading ...")
                             .font(.largeTitle)
                     }
-                        .task {
-                                    NetworkService.load { Weather in
-                                        self.weather = Weather
-                                        self.isDay = Weather.current.isDay
-                                    }
-                                }
+                    .task {
+                        NetworkService.load { Weather in
+                            self.weather = Weather
+                            self.isDay = Weather.current.isDay
+                        }
+                    }
                 }
             }
         }
-//
     }
 }
 
