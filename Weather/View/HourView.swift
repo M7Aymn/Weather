@@ -10,11 +10,11 @@ import SwiftUI
 struct HourView: View {
     let hour: Current
     var body: some View {
-        HStack(alignment: .center) {
+        HStack(alignment: .bottom) {
             Text(DateFormat.timeIn12HourFormat(from: hour.time ?? "2024-08-22 00:00"))
                 .font(.title)
                 .frame(width: 120, alignment: .leading)
-            ConditionImage(urlString: "https:" + hour.condition.icon.rawValue)
+            ConditionImage(urlString: "https:" + hour.condition.icon)
                 .frame(width: 80, height: 80)
                 .padding(.vertical, -50)
                 .padding(.horizontal, -30)
@@ -27,5 +27,5 @@ struct HourView: View {
 
 #Preview {
     //    HourView()
-    ContentView()
+    FirstScreen()
 }

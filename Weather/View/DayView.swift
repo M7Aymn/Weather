@@ -9,13 +9,12 @@ import SwiftUI
 
 struct DayView: View {
     let hours: [Current]
-    let isDay: Int
+    let isDay: Bool
+    let title: String
     
     var body: some View {
         ZStack {
-            //            Color.green
-            //                .ignoresSafeArea()
-            (isDay == 1 ? Image(.day) : Image(.night))
+            (isDay ? Image(.day) : Image(.night))
             //                .ignoresSafeArea()
                 .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
             
@@ -28,15 +27,17 @@ struct DayView: View {
                     .padding()
                 }
                 .padding(.vertical, 50)
-                .foregroundStyle(isDay == 1 ? .black : .white)
+                .foregroundStyle(isDay ? .black : .white)
+                .frame(width: UIScreen.main.bounds.width)
             }
             
         }
+        .navigationTitle(title)
         
     }
 }
 
 #Preview {
     //    DayView()
-    ContentView()
+    FirstScreen()
 }

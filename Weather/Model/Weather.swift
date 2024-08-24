@@ -23,7 +23,7 @@ struct Current: Codable {
     let condition: Condition
     let windMph, windKph: Double
     let windDegree: Int
-    let windDir: WindDir
+    let windDir: String
     let pressureMB: Int
     let pressureIn: Double
     let precipMm, precipIn, humidity, cloud: Int
@@ -79,29 +79,9 @@ struct Current: Codable {
 
 // MARK: - Condition
 struct Condition: Codable {
-    let text: Text0
-    let icon: Icon
+    let text: String
+    let icon: String
     let code: Int
-}
-
-enum Icon: String, Codable {
-    case cdnWeatherapiCOMWeather64X64Day113PNG = "//cdn.weatherapi.com/weather/64x64/day/113.png"
-    case cdnWeatherapiCOMWeather64X64Night113PNG = "//cdn.weatherapi.com/weather/64x64/night/113.png"
-}
-
-enum Text0: String, Codable {
-    case clear = "Clear"
-    case sunny = "Sunny"
-    case textClear = "Clear "
-}
-
-enum WindDir: String, Codable {
-    case n = "N"
-    case ne = "NE"
-    case nne = "NNE"
-    case nnw = "NNW"
-    case nw = "NW"
-    case wnw = "WNW"
 }
 
 // MARK: - Forecast
