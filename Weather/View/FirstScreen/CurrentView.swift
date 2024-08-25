@@ -8,37 +8,24 @@
 import SwiftUI
 
 struct CurrentView: View {
-    let locationName: String
-    let temperature: Double
-    let weatherCondition: String
-    let maxTemp: Double
-    let minTemp: Double
-    let conditionIconURL: String
-    
+    let weather: WeatherModel
     
     var body: some View {
         VStack(spacing: 0) {
-            Text(locationName)
+            Text(weather.location.name)
                 .font(.largeTitle.bold())
-            Text(String(format: "%.1f°", temperature))
+            Text(String(format: "%.1f°", weather.current.tempC))
                 .font(.largeTitle.bold())
-            Text(weatherCondition)
+            Text(weather.current.condition.text)
             Text(
-                String(format: "H:%.1f° L:%.1f°", maxTemp, minTemp)
+                String(format: "H:%.1f° L:%.1f°", weather.forecast.forecastday[0].day.maxtempC, weather.forecast.forecastday[0].day.mintempC)
             )
-            IconView(urlString: conditionIconURL, length: 110, vPadding: -25)
+            IconView(urlString: "https:" + weather.current.condition.icon, length: 110, vPadding: -25)
         }
         .font(.title)
     }
 }
 
 #Preview {
-    CurrentView(
-        locationName: dummyWeather.location.name,
-        temperature: dummyWeather.current.tempC,
-        weatherCondition: dummyWeather.current.condition.text,
-        maxTemp: dummyWeather.forecast.forecastday[0].day.maxtempC,
-        minTemp: dummyWeather.forecast.forecastday[0].day.mintempC,
-        conditionIconURL: "https:\(dummyWeather.current.condition.icon)"
-    )
+    CurrentView(weather: dummyWeather)
 }

@@ -23,12 +23,26 @@ struct DateFormat {
         }
     }
     
-    static func timeIn12HourFormat(from dateString: String) -> String {
+    static func timeIn12HoursOrNow(from dateString: String) -> String? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-        guard let date = dateFormatter.date(from: dateString) else { return "" }
+        guard let date = dateFormatter.date(from: dateString) else { return nil }
+        let calendar = Calendar.current
+        let currentDate = Date()
         
-        dateFormatter.dateFormat = "h a"
-        return dateFormatter.string(from: date)
+        let currentHour = calendar.component(.hour, from: currentDate)
+        let currentDay = calendar.component(.day, from: currentDate)
+        let givenHour = calendar.component(.hour, from: date)
+        let givenDay = calendar.component(.day, from: date)
+        
+        if currentDay == givenDay && givenHour == currentHour {
+            return "Now"
+        } else if !(currentDay == givenDay && givenHour < currentHour) {
+            dateFormatter.dateFormat = "h a"
+            return dateFormatter.string(from: date)
+        }
+        
+        return nil
     }
+
 }
