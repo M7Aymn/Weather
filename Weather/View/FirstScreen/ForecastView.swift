@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ForecastView: View {
     let forecastDays: [Forecastday]
+    let localTime: String
     let isDay: Bool
     
     var body: some View {
@@ -22,7 +23,7 @@ struct ForecastView: View {
                 let (dayName, dayNameShort) = DateFormat.dayOfWeek(from: dayForecast.date)
                 
                 NavigationLink {
-                    SecondScreenView(hours: dayForecast.hour, isDay: isDay, title: dayName)
+                    SecondScreenView(hours: dayForecast.hour, localTime: localTime, isDay: isDay, title: dayName)
                 } label: {
                     HStack {
                         
@@ -42,7 +43,7 @@ struct ForecastView: View {
 }
 
 #Preview {
-    ForecastView(forecastDays: dummyWeather.forecast.forecastday, isDay: dummyWeather.current.isDay == 1)
+    ForecastView(forecastDays: dummyWeather.forecast.forecastday, localTime: dummyWeather.location.localtime, isDay: dummyWeather.current.isDay == 1)
         .foregroundStyle(.black)
     // .1f 125 315
 }

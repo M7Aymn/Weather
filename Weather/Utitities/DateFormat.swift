@@ -24,15 +24,15 @@ struct DateFormat {
         }
     }
     
-    static func timeIn12HoursOrNow(from dateString: String) -> String? {
+    static func timeIn12HoursOrNow(from dateString: String, localTime: String) -> String? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         guard let date = dateFormatter.date(from: dateString) else { return nil }
+        guard let currentLocalTime = dateFormatter.date(from: localTime) else { return nil }
         let calendar = Calendar.current
-        let currentDate = Date()
         
-        let currentHour = calendar.component(.hour, from: currentDate)
-        let currentDay = calendar.component(.day, from: currentDate)
+        let currentHour = calendar.component(.hour, from: currentLocalTime)
+        let currentDay = calendar.component(.day, from: currentLocalTime)
         let givenHour = calendar.component(.hour, from: date)
         let givenDay = calendar.component(.day, from: date)
         

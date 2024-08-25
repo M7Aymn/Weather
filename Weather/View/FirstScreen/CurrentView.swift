@@ -20,7 +20,7 @@ struct CurrentView: View {
             Text(
                 String(format: " H:%.0f° L:%.0f°", weather.forecast.forecastday[0].day.maxtempC, weather.forecast.forecastday[0].day.mintempC)
             )
-            IconView(urlString: "https:" + weather.current.condition.icon, length: 110, vPadding: -10)
+            IconView(urlString: "https:" + weather.current.condition.icon, length: 100)
         }
         .font(.title)
     }

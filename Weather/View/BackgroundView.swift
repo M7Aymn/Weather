@@ -14,6 +14,7 @@ struct BackgroundView: View {
         VStack {
             (isDay ? Image(.day) : Image(.night))
                 .resizable()
+                .blur(radius: 2, opaque: true)
                 .frame(width: UIScreen.main.bounds.width)
                 .ignoresSafeArea()
         }

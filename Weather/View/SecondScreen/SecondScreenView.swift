@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SecondScreenView: View {
     let hours: [Current]
+    let localTime: String
     let isDay: Bool
     let title: String
     
@@ -18,20 +19,25 @@ struct SecondScreenView: View {
             
             ScrollView {
                 ForEach(hours, id: \.time) { hour in
-                    HourView(hour: hour)
+                    HourView(hour: hour, localTime: localTime)
                         .padding()
                 }
-                .padding(.vertical, 50)
+                .padding(.vertical, 30)
                 .frame(width: UIScreen.main.bounds.width)
                 .foregroundStyle(isDay ? .black : .white)
             }
             
         }
-        .navigationTitle(title)
-        
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text(title)
+                    .font(.title)
+                    .foregroundStyle(isDay ? .black : .white)
+            }
+        }
     }
 }
 
 #Preview {
-    SecondScreenView(hours: dummyWeather.forecast.forecastday[0].hour, isDay: dummyWeather.current.isDay == 1, title: "Day Name")
+    SecondScreenView(hours: dummyWeather.forecast.forecastday[0].hour, localTime: dummyWeather.location.localtime, isDay: dummyWeather.current.isDay == 1, title: "Day Name")
 }

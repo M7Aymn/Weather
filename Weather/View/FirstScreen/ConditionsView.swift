@@ -15,7 +15,7 @@ struct ConditionsView: View {
             Spacer()
             
             VStack(spacing: 5) {
-                SingleCondition(title: "VISIBILITY", value: "\(current.visKM) Km")
+                SingleCondition(title: "VISIBILITY", value: "\(current.visKM.formatted()) Km")
                 SingleCondition(title: "FEELS LIKE", value: String(format: "%.0f°", current.feelslikeC))
             }
             

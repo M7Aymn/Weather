@@ -11,21 +11,22 @@ import SwiftUI
 
 final class SecondSereenViewTests: XCTestCase {
     
+//    remember to update "giza.json" to ensure "hourView" work properly
     func testHourView() {
         XCTAssertNotNil(dummyWeather)
-        let hourView = HourView(hour: dummyWeather.forecast.forecastday[0].hour[0])
+        let hourView = HourView(hour: dummyWeather.forecast.forecastday[2].hour[0], localTime: dummyWeather.location.localtime)
         let _ = hourView.body
         let hostingController = UIHostingController(rootView: hourView)
         hostingController.loadViewIfNeeded()
-        XCTAssertEqual(hostingController.rootView.hour.isDay, dummyWeather.forecast.forecastday[0].hour[0].isDay)
+        XCTAssertEqual(hostingController.rootView.hour.isDay, dummyWeather.forecast.forecastday[2].hour[0].isDay)
     }
     
     func testSecondView() {
-        let secondScreenView = SecondScreenView(hours: dummyWeather.forecast.forecastday[0].hour, isDay: dummyWeather.current.isDay == 1, title: "Day Name")
+        let secondScreenView = SecondScreenView(hours: dummyWeather.forecast.forecastday[2].hour, localTime: dummyWeather.location.localtime, isDay: dummyWeather.current.isDay == 1, title: "Day Name")
         let _ = secondScreenView.body
         let hostingController = UIHostingController(rootView: secondScreenView)
         hostingController.loadViewIfNeeded()
-        XCTAssertEqual(hostingController.rootView.hours.count, dummyWeather.forecast.forecastday[0].hour.count)
+        XCTAssertEqual(hostingController.rootView.hours.count, dummyWeather.forecast.forecastday[2].hour.count)
         
     }
     
