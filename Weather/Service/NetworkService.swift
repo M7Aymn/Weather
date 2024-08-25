@@ -7,7 +7,11 @@
 
 import Foundation
 
-struct NetworkService {
+protocol NetworkServiceProtocol {
+    static func load(compilation: @escaping (WeatherModel) -> ())
+}
+
+struct NetworkService: NetworkServiceProtocol {
     static func load(compilation: @escaping (WeatherModel) -> ()){
         let urlString = "https://api.weatherapi.com/v1/forecast.json?key=cb11503253444d2e924131722242208&q=30.0715495,31.0215953&days=3&aqi=yes&alerts=no"
         let url = URL(string: urlString)
@@ -23,9 +27,8 @@ struct NetworkService {
                 return
             }
             do {
-                let users = try JSONDecoder().decode(WeatherModel.self, from: data)
-                print(users)
-                compilation(users)
+                let weather = try JSONDecoder().decode(WeatherModel.self, from: data)
+                compilation(weather)
                 
             } catch {
                 print(error.localizedDescription)
