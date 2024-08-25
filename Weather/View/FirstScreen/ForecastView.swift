@@ -12,36 +12,37 @@ struct ForecastView: View {
     let isDay: Bool
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 2) {
             Text("3-DAY FORECAST")
+                .font(.subheadline)
             
             ForEach(forecastDays, id: \.date) { dayForecast in
-                Divider().background(.black)
+                Rectangle().frame(height: 1)
                 
-                let dayName = DateFormat.dayOfWeek(from: dayForecast.date)
+                let (dayName, dayNameShort) = DateFormat.dayOfWeek(from: dayForecast.date)
                 
                 NavigationLink {
                     SecondScreenView(hours: dayForecast.hour, isDay: isDay, title: dayName)
                 } label: {
                     HStack {
                         
-                        Text(dayName)
-                            .frame(width: 125, alignment: .leading)
-                        IconView(urlString: "https:" + dayForecast.day.condition.icon, length: 50, vPadding: -10)
+                        Text(dayNameShort)
+                            .frame(width: 120, alignment: .leading)
+                        IconView(urlString: "https:" + dayForecast.day.condition.icon, length: 50, vPadding: -2, hPadding: -10)
                         Text(String(format: "%.1f° - %.1f°", dayForecast.day.mintempC, dayForecast.day.maxtempC)
                         )
-                        .frame(width: 125, alignment: .trailing)
+                        .frame(width: 120, alignment: .trailing)
                     }
                 }
             }
         }
         .font(.title3)
-        .frame(width: 315)
-        //        .padding()
+        .frame(width: 290)
     }
 }
 
 #Preview {
     ForecastView(forecastDays: dummyWeather.forecast.forecastday, isDay: dummyWeather.current.isDay == 1)
         .foregroundStyle(.black)
+    // .1f 125 315
 }

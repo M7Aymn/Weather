@@ -13,10 +13,10 @@ struct HourView: View {
         if let currentTime = DateFormat.timeIn12HoursOrNow(from: hour.time ?? "2024-08-22 00:00") {
             HStack(alignment: .center) {
                 Text(currentTime)
-                    .frame(width: 125, alignment: .leading)
+                    .frame(width: 110, alignment: .leading)
                 IconView(urlString: "https:" + hour.condition.icon, length: 90, vPadding: -25, hPadding: -30)
-                Text(String(format: "%.1f°", hour.tempC))
-                    .frame(width: 125, alignment: .trailing)
+                Text(String(format: "%.0f°", hour.tempC))
+                    .frame(width: 110, alignment: .trailing)
             }
             .font(.largeTitle)
         } else {
@@ -26,5 +26,5 @@ struct HourView: View {
 }
 
 #Preview {
-    HourView(hour: dummyWeather.forecast.forecastday[0].hour[12])
+    HourView(hour: dummyWeather.forecast.forecastday[0].hour[16])
 }

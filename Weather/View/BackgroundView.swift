@@ -11,11 +11,12 @@ struct BackgroundView: View {
     let isDay: Bool
     
     var body: some View {
-        (isDay ? Image(.day) : Image(.night))
-            .resizable()
-            .scaledToFill()
-            .ignoresSafeArea()
-            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        VStack {
+            (isDay ? Image(.day) : Image(.night))
+                .resizable()
+                .frame(width: UIScreen.main.bounds.width)
+                .ignoresSafeArea()
+        }
     }
 }
 

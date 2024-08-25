@@ -9,17 +9,18 @@ import Foundation
 
 struct DateFormat {
     
-    static func dayOfWeek(from dateString: String) -> String {
+    static func dayOfWeek(from dateString: String) -> (String, String) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-        guard let date = dateFormatter.date(from: dateString) else { return "" }
+        guard let date = dateFormatter.date(from: dateString) else { return ("","") }
         
         let calendar = Calendar.current
         if calendar.isDateInToday(date) {
-            return "Today"
+            return ("Today", "Today")
         } else {
             dateFormatter.dateFormat = "EEEE"
-            return String(dateFormatter.string(from: date).prefix(3))
+            let dayName = dateFormatter.string(from: date)
+            return (dayName, String(dayName.prefix(3)))
         }
     }
     
@@ -38,7 +39,7 @@ struct DateFormat {
         if currentDay == givenDay && givenHour == currentHour {
             return "Now"
         } else if !(currentDay == givenDay && givenHour < currentHour) {
-            dateFormatter.dateFormat = "h a"
+            dateFormatter.dateFormat = "ha"
             return dateFormatter.string(from: date)
         }
         

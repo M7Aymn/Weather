@@ -12,7 +12,7 @@ final class NetworkServiceTests: XCTestCase {
     
     func testNetworkDataLoading() throws {
         let expectation = expectation(description: "Loading weather data")
-        NetworkService.load() { result in
+        NetworkService.load(search: "30.0715495,31.0215953") { result in
             XCTAssertNotNil(result)
             XCTAssertEqual(result.location.name, "Giza")
             XCTAssertEqual(result.forecast.forecastday.count, 3)

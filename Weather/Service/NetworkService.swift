@@ -8,12 +8,12 @@
 import Foundation
 
 protocol NetworkServiceProtocol {
-    static func load(compilation: @escaping (WeatherModel) -> ())
+    static func load(search: String, compilation: @escaping (WeatherModel) -> ())
 }
 
 struct NetworkService: NetworkServiceProtocol {
-    static func load(compilation: @escaping (WeatherModel) -> ()){
-        let urlString = "https://api.weatherapi.com/v1/forecast.json?key=cb11503253444d2e924131722242208&q=30.0715495,31.0215953&days=3&aqi=yes&alerts=no"
+    static func load(search: String, compilation: @escaping (WeatherModel) -> ()){
+        let urlString = "https://api.weatherapi.com/v1/forecast.json?key=cb11503253444d2e924131722242208&q=\(search)&days=3&aqi=yes&alerts=no"
         let url = URL(string: urlString)
         let request = URLRequest(url: url!)
         let session = URLSession(configuration: .default)

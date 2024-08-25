@@ -16,14 +16,14 @@ struct ConditionsView: View {
             
             VStack(spacing: 5) {
                 SingleCondition(title: "VISIBILITY", value: "\(current.visKM) Km")
-                SingleCondition(title: "FEELS LIKE", value: String(format: "%.1f°", current.feelslikeC))
+                SingleCondition(title: "FEELS LIKE", value: String(format: "%.0f°", current.feelslikeC))
             }
             
             Spacer()
             
             VStack(spacing: 5) {
                 SingleCondition(title: "HUMIDITY", value: "\(current.humidity)%")
-                SingleCondition(title: "PRESSURE", value: "\(current.pressureMB)")
+                SingleCondition(title: "PRESSURE", value: "\(current.pressureMB.formatted())")
             }
             
             Spacer()
@@ -41,7 +41,7 @@ struct SingleCondition: View {
             Text(value)
                 .font(.title)
         }
-        .padding(.bottom, 20)
+        .padding(.bottom, 30)
     }
 }
 
