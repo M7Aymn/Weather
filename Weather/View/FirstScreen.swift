@@ -15,11 +15,10 @@ struct FirstScreen: View {
         NavigationStack{
             ZStack {
                 if let weather = weather {
-                    (isDay ? Image(.day) : Image(.night))
-                        .ignoresSafeArea()
-                        .frame(width: UIScreen.main.bounds.width)
-                
+                    BackgroundView(isDay: isDay)
+                    
                     VStack {
+                        Spacer()
                         
                         CurrentSummary(
                             locationName: weather.location.name,
@@ -30,14 +29,18 @@ struct FirstScreen: View {
                             conditionIconURL: "https:" + weather.current.condition.icon
                         )
                         
+                        Spacer()
                         
                         DaysForecast(
                             forecastDays: weather.forecast.forecastday,
                             isDay: isDay
                         )
                         
+                        Spacer()
+                        
                         CurrentConditions(current: weather.current)
                         
+                        Spacer()
                     }
                     .padding()
                     .foregroundStyle(isDay ? .black : .white)
@@ -57,13 +60,11 @@ struct FirstScreen: View {
                     .task {
                         NetworkService.load { Weather in
                             self.weather = Weather
-//                            print(Weather)
                             self.isDay = Weather.current.isDay == 1
                         }
                     }
                 }
             }
-//            .navigationTitle("Weather")
         }
     }
 }

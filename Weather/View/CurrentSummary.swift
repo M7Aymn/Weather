@@ -17,24 +17,28 @@ struct CurrentSummary: View {
     
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             Text(locationName)
-                .bold()
+                .font(.largeTitle.bold())
             Text(String(format: "%.1f°", temperature))
-                .bold()
+                .font(.largeTitle.bold())
             Text(weatherCondition)
             Text(
                 String(format: "H:%.1f° L:%.1f°", maxTemp, minTemp)
             )
-            ConditionImage(urlString: conditionIconURL)
-                .frame(width: 110, height: 110)
-                .padding(-45)
+            ConditionImage(urlString: conditionIconURL, length: 110, vPadding: -25)
         }
         .font(.title)
-        .padding()
     }
 }
 
 #Preview {
-    CurrentSummary(locationName: "Zagazig", temperature: 33.6, weatherCondition: "clear", maxTemp: 37.3, minTemp: 25.6, conditionIconURL: "https://cdn.weatherapi.com/weather/64x64/night/113.png")
+    CurrentSummary(
+        locationName: dummyWeather.location.name,
+        temperature: dummyWeather.current.tempC,
+        weatherCondition: dummyWeather.current.condition.text,
+        maxTemp: dummyWeather.forecast.forecastday[0].day.maxtempC,
+        minTemp: dummyWeather.forecast.forecastday[0].day.mintempC,
+        conditionIconURL: "https:\(dummyWeather.current.condition.icon)"
+    )
 }

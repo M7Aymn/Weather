@@ -13,47 +13,38 @@ struct CurrentConditions: View {
     var body: some View {
         HStack(spacing: 30) {
             Spacer()
+            
             VStack(spacing: 5) {
-                Text("VISIBILITY")
-                    .padding(.bottom, 5)
-                Text("\(current.visKM) Km")
-                    .font(.title)
-                    .padding(.bottom, 20)
-                
-                
-                Text("FEELS LIKE")
-                    .padding(.bottom, 5)
-                
-                Text(String(format: "%.1f°", current.feelslikeC))
-                    .font(.title)
-                    .padding(.bottom, 20)
+                SingleCondition(title: "VISIBILITY", value: "\(current.visKM) Km")
+                SingleCondition(title: "FEELS LIKE", value: String(format: "%.1f°", current.feelslikeC))
             }
-            .padding(.bottom, 30)
+            
             Spacer()
             
             VStack(spacing: 5) {
-                Text("HUMIDITY")
-                    .padding(.bottom, 5)
-                
-                Text("\(current.humidity)%")
-                    .font(.title)
-                    .padding(.bottom, 20)
-                
-                Text("PRESSURE")
-                    .padding(.bottom, 5)
-                
-                Text("\(current.pressureMB)")
-                    .font(.title)
-                    .padding(.bottom, 20)
-                
+                SingleCondition(title: "HUMIDITY", value: "\(current.humidity)%")
+                SingleCondition(title: "PRESSURE", value: "\(current.pressureMB)")
             }
-            .padding(.bottom, 30)
+            
             Spacer()
         }
     }
 }
 
+struct SingleCondition: View {
+    let title: String
+    let value: String
+    
+    var body: some View {
+        VStack(spacing: 5) {
+            Text(title)
+            Text(value)
+                .font(.title)
+        }
+        .padding(.bottom, 20)
+    }
+}
+
 #Preview {
-//    CurrentConditions()
-    FirstScreen()
+    CurrentConditions(current: dummyWeather.current)
 }

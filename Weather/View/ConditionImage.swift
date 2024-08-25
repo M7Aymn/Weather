@@ -9,6 +9,9 @@ import SwiftUI
 
 struct ConditionImage: View {
     let urlString: String
+    let length: CGFloat
+    var vPadding: CGFloat = 0
+    var hPadding: CGFloat = 0
     var body: some View {
         AsyncImage(url: URL(string: urlString)) { phase in
             switch phase {
@@ -18,7 +21,7 @@ struct ConditionImage: View {
             case .success(let image):
                 image
                     .resizable()
-                    .scaledToFit()
+                    .scaledToFill()
                     .clipShape(Circle())
             case .failure:
                 Image(systemName: "photo")
@@ -31,10 +34,15 @@ struct ConditionImage: View {
                 EmptyView()
             }
         }
+        .frame(width: length, height: length)
+        .padding(.vertical, vPadding)
+        .padding(.horizontal, hPadding)
     }
 }
 
 #Preview {
-    ConditionImage(urlString: "https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg")
-        .frame(width: 200, height: 200)
+    ConditionImage(urlString: "https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg", length: 200)
+        .overlay {
+            Circle().stroke()
+        }
 }
