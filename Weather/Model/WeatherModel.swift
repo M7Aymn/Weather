@@ -20,7 +20,7 @@ struct Current: Codable {
     let pressureMB: Int
     let humidity: Int
     let feelslikeC: Double
-    let visKM: Int
+    let visKM: Double
     let time: String?
     
     enum CodingKeys: String, CodingKey {

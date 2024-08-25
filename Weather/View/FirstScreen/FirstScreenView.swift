@@ -6,11 +6,14 @@
 //
 
 import SwiftUI
+import CoreLocation
+import CoreLocationUI
 
 struct FirstScreenView: View {
     @State private var weather: WeatherModel?
     @State private var isDay = false
     @State private var cityName = ""
+    @StateObject var locationManager = LocationManager()
     
     var body: some View {
         
@@ -20,20 +23,51 @@ struct FirstScreenView: View {
                     BackgroundView(isDay: isDay)
                     
                     ScrollView {
-                    
+                        
                         VStack {
-                            TextField("Search for city", text: $cityName)
-                                .padding(5)
+                                                        
+                            HStack {
+                                let color: Color = isDay ? .black : .white
+                                
+                                HStack {
+                                    Image(systemName: "magnifyingglass")
+                                        .foregroundColor(color)
+                                        .padding(.horizontal, -5)
+                                    
+                                    TextField("", text: $cityName, prompt: Text("Search for city").foregroundColor(color.opacity(0.4)))
+                                        .foregroundColor(color)
+                                        .onSubmit {
+                                            loadWeatherData(for: cityName)
+                                            cityName = ""
+                                        }
+                                    
+                                    Button(action: {cityName = ""}) {
+                                        Image(systemName: "xmark.circle.fill")
+                                            .foregroundColor(color.opacity(cityName.isEmpty ? 0 : 1))
+                                            .padding(.horizontal, -5)
+                                    }
+                                }
+                                .padding(.horizontal)
+                                .frame(height: 35)
                                 .background(
                                     RoundedRectangle(cornerRadius: 10)
                                         .fill(.ultraThinMaterial)
                                         .shadow(radius: 4)
                                 )
-                                .padding()
-                                .onSubmit {
-                                    loadWeatherData(for: cityName)
-                                    cityName = ""
+                                
+                                
+                                Button(action: locationManager.requestLocation) {
+                                    Image(systemName: "location.fill")
+                                        .foregroundColor(color)
+                                        .frame(width: 35, height: 35)
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 10)
+                                                .fill(.ultraThinMaterial)
+                                                .shadow(radius: 4)
+                                        )
                                 }
+                            }
+                            .padding()
                             
                             Spacer()
                             CurrentView(weather: weather)
@@ -49,6 +83,11 @@ struct FirstScreenView: View {
                 }
                 
             }
+            .onAppear {
+                locationManager.locationUpdated = { location in
+                    loadWeatherData(for: "\(location.latitude),\(location.longitude)")
+                }
+            }
             
         } else {
             LoadingView()
@@ -56,6 +95,7 @@ struct FirstScreenView: View {
                     loadWeatherData(for: "30.0715495,31.0215953")
                 }
         }
+        
     }
     
     private func loadWeatherData(for city: String) {
@@ -66,6 +106,40 @@ struct FirstScreenView: View {
         }
     }
 }
+
+class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
+    let manager = CLLocationManager()
+    
+    @Published var location: CLLocationCoordinate2D? {
+        didSet {
+            if let location = location {
+                locationUpdated?(location)
+            }
+        }
+    }
+    var locationUpdated: ((CLLocationCoordinate2D) -> Void)?
+    
+    override init() {
+        super.init()
+        manager.delegate = self
+//        manager.requestWhenInUseAuthorization()
+    }
+    
+    func requestLocation() {
+        manager.requestWhenInUseAuthorization()
+        manager.requestLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        location = locations.first?.coordinate
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Failed to find user's location: \(error.localizedDescription)")
+    }
+}
+
+
 
 #Preview {
     FirstScreenView()
