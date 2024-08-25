@@ -13,7 +13,7 @@ struct HourView: View {
         HStack(alignment: .center) {
             Text(DateFormat.timeIn12HourFormat(from: hour.time ?? "2024-08-22 00:00"))
                 .frame(width: 125, alignment: .leading)
-            ConditionImage(urlString: "https:" + hour.condition.icon, length: 90, vPadding: -25, hPadding: -30)
+            IconView(urlString: "https:" + hour.condition.icon, length: 90, vPadding: -25, hPadding: -30)
             Text(String(format: "%.1f°", hour.tempC))
                 .frame(width: 125, alignment: .trailing)
         }

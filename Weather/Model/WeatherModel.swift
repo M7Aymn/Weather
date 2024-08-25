@@ -1,5 +1,5 @@
 //
-//  Weather.swift
+//  WeatherModel.swift
 //  Weather
 //
 //  Created by Mohamed Ayman on 22/08/2024.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Weather: Codable {
+struct WeatherModel: Codable {
     let location: Location
     let current: Current
     let forecast: Forecast

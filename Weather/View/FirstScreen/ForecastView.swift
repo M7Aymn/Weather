@@ -1,5 +1,5 @@
 //
-//  DaysForecast.swift
+//  ForecastView.swift
 //  Weather
 //
 //  Created by Mohamed Ayman on 24/08/2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DaysForecast: View {
+struct ForecastView: View {
     let forecastDays: [Forecastday]
     let isDay: Bool
     
@@ -21,13 +21,13 @@ struct DaysForecast: View {
                 let dayName = DateFormat.dayOfWeek(from: dayForecast.date)
                 
                 NavigationLink {
-                    SecondScreen(hours: dayForecast.hour, isDay: isDay, title: dayName)
+                    SecondScreenView(hours: dayForecast.hour, isDay: isDay, title: dayName)
                 } label: {
                     HStack {
                         
                         Text(dayName)
                             .frame(width: 125, alignment: .leading)
-                        ConditionImage(urlString: "https:" + dayForecast.day.condition.icon, length: 50, vPadding: -10)
+                        IconView(urlString: "https:" + dayForecast.day.condition.icon, length: 50, vPadding: -10)
                         Text(String(format: "%.1f° - %.1f°", dayForecast.day.mintempC, dayForecast.day.maxtempC)
                         )
                         .frame(width: 125, alignment: .trailing)
@@ -42,6 +42,6 @@ struct DaysForecast: View {
 }
 
 #Preview {
-    DaysForecast(forecastDays: dummyWeather.forecast.forecastday, isDay: dummyWeather.current.isDay == 1)
+    ForecastView(forecastDays: dummyWeather.forecast.forecastday, isDay: dummyWeather.current.isDay == 1)
         .foregroundStyle(.black)
 }

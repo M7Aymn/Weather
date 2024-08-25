@@ -1,5 +1,5 @@
 //
-//  CurrentConditions.swift
+//  ConditionsView.swift
 //  Weather
 //
 //  Created by Mohamed Ayman on 24/08/2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CurrentConditions: View {
+struct ConditionsView: View {
     let current: Current
     
     var body: some View {
@@ -46,5 +46,5 @@ struct SingleCondition: View {
 }
 
 #Preview {
-    CurrentConditions(current: dummyWeather.current)
+    ConditionsView(current: dummyWeather.current)
 }

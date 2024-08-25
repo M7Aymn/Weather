@@ -1,5 +1,5 @@
 //
-//  CurrentSummary.swift
+//  CurrentView.swift
 //  Weather
 //
 //  Created by Mohamed Ayman on 24/08/2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CurrentSummary: View {
+struct CurrentView: View {
     let locationName: String
     let temperature: Double
     let weatherCondition: String
@@ -26,14 +26,14 @@ struct CurrentSummary: View {
             Text(
                 String(format: "H:%.1f° L:%.1f°", maxTemp, minTemp)
             )
-            ConditionImage(urlString: conditionIconURL, length: 110, vPadding: -25)
+            IconView(urlString: conditionIconURL, length: 110, vPadding: -25)
         }
         .font(.title)
     }
 }
 
 #Preview {
-    CurrentSummary(
+    CurrentView(
         locationName: dummyWeather.location.name,
         temperature: dummyWeather.current.tempC,
         weatherCondition: dummyWeather.current.condition.text,

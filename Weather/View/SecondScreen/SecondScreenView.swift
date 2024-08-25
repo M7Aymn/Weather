@@ -1,5 +1,5 @@
 //
-//  DayView.swift
+//  SecondScreenView.swift
 //  Weather
 //
 //  Created by Mohamed Ayman on 22/08/2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SecondScreen: View {
+struct SecondScreenView: View {
     let hours: [Current]
     let isDay: Bool
     let title: String
@@ -33,5 +33,5 @@ struct SecondScreen: View {
 }
 
 #Preview {
-    SecondScreen(hours: dummyWeather.forecast.forecastday[0].hour, isDay: dummyWeather.current.isDay == 1, title: "Day Name")
+    SecondScreenView(hours: dummyWeather.forecast.forecastday[0].hour, isDay: dummyWeather.current.isDay == 1, title: "Day Name")
 }

@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  FirstScreenView.swift
 //  Weather
 //
 //  Created by Mohamed Ayman on 22/08/2024.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct FirstScreen: View {
-    @State private var weather: Weather?
+struct FirstScreenView: View {
+    @State private var weather: WeatherModel?
     @State private var isDay = false
     
     var body: some View {
@@ -20,7 +20,7 @@ struct FirstScreen: View {
                     VStack {
                         Spacer()
                         
-                        CurrentSummary(
+                        CurrentView(
                             locationName: weather.location.name,
                             temperature: weather.current.tempC,
                             weatherCondition: weather.current.condition.text,
@@ -31,14 +31,14 @@ struct FirstScreen: View {
                         
                         Spacer()
                         
-                        DaysForecast(
+                        ForecastView(
                             forecastDays: weather.forecast.forecastday,
                             isDay: isDay
                         )
                         
                         Spacer()
                         
-                        CurrentConditions(current: weather.current)
+                        ConditionsView(current: weather.current)
                         
                         Spacer()
                     }
@@ -70,5 +70,5 @@ struct FirstScreen: View {
 }
 
 #Preview {
-    FirstScreen()
+    FirstScreenView()
 }

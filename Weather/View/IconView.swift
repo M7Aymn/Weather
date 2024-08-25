@@ -1,5 +1,5 @@
 //
-//  ConditionImage.swift
+//  IconView.swift
 //  Weather
 //
 //  Created by Mohamed Ayman on 22/08/2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ConditionImage: View {
+struct IconView: View {
     let urlString: String
     let length: CGFloat
     var vPadding: CGFloat = 0
@@ -41,7 +41,7 @@ struct ConditionImage: View {
 }
 
 #Preview {
-    ConditionImage(urlString: "https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg", length: 200)
+    IconView(urlString: "https://letsenhance.io/static/73136da51c245e80edc6ccfe44888a99/1015f/MainBefore.jpg", length: 200)
         .overlay {
             Circle().stroke()
         }

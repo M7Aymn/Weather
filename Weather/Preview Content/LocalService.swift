@@ -7,7 +7,7 @@
 
 import Foundation
 
-var dummyWeather: Weather = load("giza.json")
+var dummyWeather: WeatherModel = load("giza.json")
 
 func load <T: Decodable> (_ fileName: String) -> T {
     var data: Data
