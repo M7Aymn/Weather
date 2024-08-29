@@ -59,7 +59,9 @@ struct FirstScreenView: View {
         NetworkService.load(search: city) { weather in
             self.cityName = ""
             self.weather = weather
-            self.isDay = weather.current.isDay == 1
+            withAnimation {
+                self.isDay = weather.current.isDay == 1
+            }
         }
     }
 }
