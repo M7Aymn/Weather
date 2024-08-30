@@ -8,30 +8,26 @@
 import SwiftUI
 
 struct SearchLocationView: View {
-    @Binding var cityName: String
-    var isDay: Bool
-    var locationManager: LocationManager
-    var onSearch: (String) -> Void
+    @ObservedObject var viewModel: FirstScreenViewModel
     
     var body: some View {
         HStack {
-            let color: Color = isDay ? .black : .white
+            let color: Color = viewModel.isDay ? .black : .white
             
             HStack {
                 Image(systemName: "magnifyingglass")
                     .foregroundColor(color)
                     .padding(.horizontal, -5)
                 
-                TextField("", text: $cityName, prompt: Text("Search for city").foregroundColor(color.opacity(0.4)))
+                TextField("", text: $viewModel.cityName, prompt: Text("Search for city").foregroundColor(color.opacity(0.4)))
                     .foregroundColor(color)
                     .onSubmit {
-                        onSearch(cityName)
-                        cityName = ""
+                        viewModel.loadCityData()
                     }
                 
-                Button(action: {cityName = ""}) {
+                Button(action: {viewModel.cityName = ""}) {
                     Image(systemName: "xmark.circle.fill")
-                        .foregroundColor(color.opacity(cityName.isEmpty ? 0 : 1))
+                        .foregroundColor(color.opacity(viewModel.cityName.isEmpty ? 0 : 1))
                         .padding(.horizontal, -5)
                 }
             }
@@ -44,7 +40,7 @@ struct SearchLocationView: View {
             )
             
             
-            Button(action: locationManager.requestLocation) {
+            Button(action: viewModel.locationManager.requestLocation) {
                 Image(systemName: "location.fill")
                     .foregroundColor(color)
                     .frame(width: 35, height: 35)
@@ -60,6 +56,5 @@ struct SearchLocationView: View {
 }
 
 #Preview {
-    @State var cityNameDemo: String = ""
-    return SearchLocationView(cityName: $cityNameDemo, isDay: true, locationManager: LocationManager(), onSearch: {_ in})
+    SearchLocationView(viewModel: FirstScreenViewModel())
 }

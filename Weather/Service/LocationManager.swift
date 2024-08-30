@@ -8,10 +8,11 @@
 import Foundation
 import CoreLocation
 
-class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
+@Observable
+class LocationManager: NSObject, CLLocationManagerDelegate {
     let manager = CLLocationManager()
     
-    @Published var location: CLLocationCoordinate2D? {
+    var location: CLLocationCoordinate2D? {
         didSet {
             if let location = location {
                 locationUpdated?(location)
@@ -23,6 +24,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     override init() {
         super.init()
         manager.delegate = self
+        manager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
 //        manager.requestWhenInUseAuthorization()
     }
     

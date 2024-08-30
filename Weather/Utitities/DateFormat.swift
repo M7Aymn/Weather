@@ -9,13 +9,16 @@ import Foundation
 
 struct DateFormat {
     
-    static func dayOfWeek(from dateString: String) -> (String, String) {
+    static func dayOfWeek(from dateString: String, localTime: String) -> (String, String) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         guard let date = dateFormatter.date(from: dateString) else { return ("","") }
         
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        guard let localDate = dateFormatter.date(from: localTime) else { return ("","") }
+
         let calendar = Calendar.current
-        if calendar.isDateInToday(date) {
+        if calendar.isDate(date, inSameDayAs: localDate) {
             return ("Today", "Today")
         } else {
             dateFormatter.dateFormat = "EEEE"

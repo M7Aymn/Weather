@@ -8,29 +8,27 @@
 import SwiftUI
 
 struct ForecastView: View {
-    let forecastDays: [Forecastday]
-    let localTime: String
-    let isDay: Bool
+    @ObservedObject var viewModel: FirstScreenViewModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
             Text("3-DAY FORECAST")
                 .font(.subheadline)
             
-            ForEach(forecastDays, id: \.date) { dayForecast in
+            ForEach(viewModel.weather!.forecast.forecastday, id: \.date) { forecastDay in
                 Rectangle().frame(height: 1)
                 
-                let (dayName, dayNameShort) = DateFormat.dayOfWeek(from: dayForecast.date)
+                let (dayName, dayNameShort) = viewModel.getDayName(for: forecastDay)
                 
                 NavigationLink {
-                    SecondScreenView(hours: dayForecast.hour, localTime: localTime, isDay: isDay, title: dayName)
+                    let secondVM = viewModel.prepareForSecondScreen(forecastDay: forecastDay, title: dayName)
+                    SecondScreenView(viewModel: secondVM)
                 } label: {
                     HStack {
-                        
                         Text(dayNameShort)
                             .frame(width: 120, alignment: .leading)
-                        IconView(urlString: "https:" + dayForecast.day.condition.icon, length: 50, vPadding: -2, hPadding: -10)
-                        Text(String(format: "%.1f° - %.1f°", dayForecast.day.mintempC, dayForecast.day.maxtempC)
+                        IconView(urlString: "https:" + forecastDay.day.condition.icon, length: 50, vPadding: -2, hPadding: -10)
+                        Text(String(format: "%.1f° - %.1f°", forecastDay.day.mintempC, forecastDay.day.maxtempC)
                         )
                         .frame(width: 120, alignment: .trailing)
                     }
@@ -43,7 +41,6 @@ struct ForecastView: View {
 }
 
 #Preview {
-    ForecastView(forecastDays: dummyWeather.forecast.forecastday, localTime: dummyWeather.location.localtime, isDay: dummyWeather.current.isDay == 1)
+    ForecastView(viewModel: FirstScreenViewModel())
         .foregroundStyle(.black)
-    // .1f 125 315
 }
